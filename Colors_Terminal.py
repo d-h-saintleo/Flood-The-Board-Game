@@ -1,3 +1,8 @@
+#Colors_Terminal.py
+#https://github.com/d-h-saintleo/Flood-The-Board-Game
+
+#Color Functions:
+#   Note: Colors in terminal version are represented by numbers
 
 
 def Red():
@@ -32,6 +37,7 @@ def Pink():
     
 
 
+#Define the colors in a specific color set size
 
 def Set(size):
     if size == 1:
