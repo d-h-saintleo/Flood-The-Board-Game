@@ -1,3 +1,5 @@
+https://github.com/d-h-saintleo/Flood-The-Board-Game
+
 # Flood The Board Game
 - [x] Version 1 - Terminal
 - [ ] Version 2 - GUI
@@ -19,3 +21,4 @@ Python 3.0 or greater (https://www.python.org/downloads/)
 # Additional Notes:
 * "Q" input can be used in order to exit the game.
 * The terminal version of the game displays numbers instead colors and an "#" to symbolize a tile is a part of the flood.
+
