@@ -14,7 +14,7 @@ from Board import *
 #Get Initial Inputs
 while True:
     try:
-        xInput = int(input("Input X Size (1-15): "))
+        xInput = int(input("Input Board Width (1-15): "))
         if xInput > 0 and xInput < 16:
             break
         else:
@@ -25,7 +25,7 @@ while True:
         
 while True:
     try:
-        yInput = int(input("Input Y Size (1-15): "))
+        yInput = int(input("Input Board Height (1-15): "))
         if yInput > 0 and yInput < 16:
             break
         else:
