@@ -6,7 +6,18 @@
 from Board import *
 
 
-#Variables
+
+#Inital Printed Message
+print("Welcome to Flood the Board!")
+print("==============================================================\n")
+print("Instructions:")
+print("  -Input the inital game parameters.")
+print("  -Switch the color of the board until all tiles are the same color.")
+print("  -To win the game, flood the board within the limited amount of turns.")
+print("  -'Q' can be used anytime to exit the game.")
+print("\n\n")
+print("Game Parameters:")
+print("==============================================================")
 
 
 
@@ -49,7 +60,7 @@ while True:
 
 
 #Create Board
-board = Board(xInput,yInput,colorsInput)
+board = Board(xInput, yInput, colorsInput, False)
 #Color Set:
 colorSet = board.ColorSet()
 colorSetString = ""
