@@ -1,6 +1,8 @@
 #Colors.py
 #https://github.com/d-h-saintleo/Flood-The-Board-Game
 
+
+#Color Hex Values
 def Red():
     return "#ff0000"
 
@@ -35,29 +37,19 @@ def Pink():
     return "#ffc0cb"
 
 
-def Set(size):
-    if size == 1:
-        return [Red()]
-    elif size == 2:
-        return [Red(), Blue()]
-    elif size == 3:
-        return [Red(), Blue(), Green()]
-    elif size == 4:
-        return [Red(), Blue(), Green(), Yellow()]
-    elif size == 5:
-        return [Red(), Blue(), Green(), Yellow(), Purple()]
-    elif size == 6:
-        return [Red(), Blue(), Green(), Yellow(), Purple(), Cyan()]
-    elif size == 7:
-        return [Red(), Blue(), Green(), Yellow(), Purple(), Cyan(), Orange()]
-    elif size == 8:
-        return [Red(), Blue(), Green(), Yellow(), Purple(), Cyan(), Orange(), White()]
-    elif size == 9:
-        return [Red(), Blue(), Green(), Yellow(), Purple(), Cyan(), Orange(), White(), Black()]
-    elif size == 10:
-        return [Red(), Blue(), Green(), Yellow(), Purple(), Cyan(), Orange(), White(), Black(), Pink()]
-    else:
-        return None
-
-
     
+#Return list of values (color hex or integers)
+def Set(size, returnHex):
+
+    #Return color hex values set(GUI version)
+    if returnHex == True:
+        return  [Red(), Blue(), Green(), Yellow(), Purple(), Cyan(), Orange(), White(), Black(), Pink()][0:(size - 1)] 
+    
+    #Return single integer values set(terminal version)
+    elif returnHex == False:
+        set = []
+        for i in range(0, size - 1):
+            set.append(str(i))
+        return set
+    
+        
