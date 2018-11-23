@@ -2,6 +2,9 @@ https://github.com/d-h-saintleo/Flood-The-Board-Game
 
 # Flood The Board Game
 - [x] Version 1 - Terminal
+  - [x] Version 1.0 - First terminal version
+  - [x] Version 1.1 - Updates to help facilitate GUI implementation
+  - [ ] Version 1.2 - First test GUI version
 - [ ] Version 2 - GUI
 - [ ] Version 3 - Final Version
 
@@ -10,8 +13,8 @@ Python 3.0 or greater (https://www.python.org/downloads/)
 
 # Instructions:
 1. Download the Zip file containing all the files
-2. Extract the folder
-3. Run "Game_Terminal.py" file to play the game
+2. Extract the folder containing the source files
+3. With all the files in the same folder, run "Game_Terminal.py" file to play the game
 
 # Game Instructions:
 * The objective of the game is to flood the entire board with the same color in a limited amount of turns based on the size and complexity of the board. In order to do this, you must switch the color of the flood to a color of the neighboring tiles that are touching the flood until all tiles are the same color.
