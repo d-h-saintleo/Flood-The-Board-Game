@@ -43,12 +43,12 @@ def Set(size, returnHex):
 
     #Return color hex values set(GUI version)
     if returnHex == True:
-        return  [Red(), Blue(), Green(), Yellow(), Purple(), Cyan(), Orange(), White(), Black(), Pink()][0:(size - 1)] 
+        return  [Red(), Blue(), Green(), Yellow(), Purple(), Cyan(), Orange(), White(), Black(), Pink()][0:size] 
     
     #Return single integer values set(terminal version)
     elif returnHex == False:
         set = []
-        for i in range(0, size - 1):
+        for i in range(0, size):
             set.append(str(i))
         return set
     
