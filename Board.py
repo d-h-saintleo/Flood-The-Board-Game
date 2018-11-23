@@ -1,19 +1,19 @@
 #Board.py
 #https://github.com/d-h-saintleo/Flood-The-Board-Game
-    
+
+
 #Python Module Imports
 import math
 import random
 #Source File Imports
-import Colors_Terminal as Colors
+import Colors
 from Tile import *
-
 
 
 
 class Board:
     
-    def __init__(self, sizeX, sizeY, colorSetSize):
+    def __init__(self, sizeX, sizeY, colorSetSize, returnHexBool):
 
         #Instance Private Variables
         self._Grid = []
@@ -24,10 +24,10 @@ class Board:
         self._WinningScore = None
         
         
-        #Get Colors
-        self._ColorSet = Colors.Set(colorSetSize)
+        #Get Colors 
+        #returnHexBool: (color hex values (True), text integers (false))
+        self._ColorSet = Colors.Set(colorSetSize, returnHexBool)
         
-
 
         #Add Tiles
         for row_y in range(0, sizeY):
@@ -232,16 +232,3 @@ class Board:
         return colorGrid
         
         
-    def PrintNeighbors(self, x, y):
-        print("N:")
-        print(self._Grid[y][x].NorthNeighbor())
-        print("\nE:")
-        print(self._Grid[y][x].EastNeighbor())
-        print("\nS:")
-        print(self._Grid[y][x].SouthNeighbor())
-        print("\nW:")
-        print(self._Grid[y][x].WestNeighbor())
-        
-        
-        
-
