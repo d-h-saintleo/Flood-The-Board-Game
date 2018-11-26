@@ -30,23 +30,3 @@ Python 3.0 or greater (https://www.python.org/downloads/)
 * **GUI**: To get started, you first must select the width and heighth of the board as well as the number of colors to be used. Then you must click on any tile in order to switch the color of the flood to that tile's color. The board will update and display your current progress as you switch colors until the board is completely flood, or you exit the game.
 
 
-# Known Issues:
-
-- Window "X" button continues to start a new game rather than exit the game
-	- "Exit Game" button and "File/Exit" from menu bar will properly exit the game
-	- Callback function needed to properly exit mutliple games/windows loop
-- Turns does not update on the GUI
-	- Variable errors raised
-	- Potential fix is to move turns tracking to be a function of Board() rather than Game().
-- Minimum Height restricted to 8 due to current GUI limitations
-	- Fixable, but needs additional GUI layout code
-
-# Other Needed Additions:
-- File Menu Bar:
-	- Instructions Window
-- Flag to mark that a game win/lose message has already been displayed
-- Once GUI issue that is limiting min height to 8 is fixed, borders on the tiles can be removed to make the tiles look more connected
-	- Potentially have this a checkbox toggle
-- Additional window scaling
-	- Intervals of 5, instead of the current: 10
-- General code clean up
