@@ -45,7 +45,7 @@ Python 3.0 or greater (https://www.python.org/downloads/)
 - File Menu Bar:
 	- Instructions Window
 - Flag to mark that a game win/lose message has already been displayed
-- Once GUI issue that is limiting max height to 8 is fixed, borders on the tiles can be removed to make the tiles look more connected
+- Once GUI issue that is limiting min height to 8 is fixed, borders on the tiles can be removed to make the tiles look more connected
 	- Potentially have this a checkbox toggle
 - Additional window scaling
 	- Intervals of 5, instead of the current: 10
