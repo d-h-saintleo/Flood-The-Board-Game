@@ -7,7 +7,7 @@ https://github.com/d-h-saintleo/Flood-The-Board-Game
   - [x] Version 1.2 - GUI proof of concept
 - [X] Version 2 - GUI
   - [x] Version 2.0 - First GUI Release (**see "Known Issues"**)
-  - [ ] Version 2.1 - v2.0 Errors fixed
+  - [x] Version 2.1 - v2.0 Errors fixed
 - [ ] Version 3 - Final Version
 
 # Requirements:
