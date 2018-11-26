@@ -5,8 +5,9 @@ https://github.com/d-h-saintleo/Flood-The-Board-Game
   - [x] Version 1.0 - First terminal version
   - [x] Version 1.1 - Updates to help facilitate GUI implementation
   - [x] Version 1.2 - GUI proof of concept
-  - [ ] Version 1.3 - GUI test version
-- [ ] Version 2 - GUI
+- [X] Version 2 - GUI
+  - [x] Version 2.0 - First GUI Release (see "Known Issues")
+  - [ ] Version 2.1 - v2.0 Errors fixed
 - [ ] Version 3 - Final Version
 
 # Requirements:
@@ -28,7 +29,24 @@ Python 3.0 or greater (https://www.python.org/downloads/)
 
 * **GUI**: To get started, you first must select the width and heighth of the board as well as the number of colors to be used. Then you must click on any tile in order to switch the color of the flood to that tile's color. The board will update and display your current progress as you switch colors until the board is completely flood, or you exit the game.
 
-# Additional Notes:
-* "Q" input can be used in order to exit the game.
-* The terminal version of the game displays numbers instead colors and an "#" to symbolize a tile is a part of the flood.
 
+# Known Issues:
+
+- Window "X" button continues to start a new game rather than exit the game
+	- "Exit Game" button and "File/Exit" from menu bar will properly exit the game
+	- Callback function needed to properly exit mutliple games/windows loop
+- Turns does not update on the GUI
+	- Variable errors raised
+	- Potential fix is to move turns tracking to be a function of Board() rather than Game().
+- Minimum Height restricted to 8 due to current GUI limitations
+	- Fixable, but needs additional GUI layout code
+
+# Other Needed Additions:
+- File Menu Bar:
+	- Instructions Window
+- Flag to mark that a game win/lose message has already been displayed
+- Once GUI issue that is limiting max height to 8 is fixed, borders on the tiles can be removed to make the tiles look more connected
+	- Potentially have this a checkbox toggle
+- Additional window scaling
+	- Intervals of 5, instead of the current: 10
+- General code clean up
