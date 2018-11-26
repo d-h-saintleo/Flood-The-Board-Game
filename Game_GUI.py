@@ -11,22 +11,21 @@ from tkinter import *
 
 
 #Source File Imports
-import Colors
 from Board import *
 
 
 
+#Create the initial tiles/buttons
 def CreateButtons():
-
     for y in range(0, b.Y()):
         for x in range(0, b.X()):
 
-            buttons[y][x] = Button(window, bd=1, bg=b.Grid()[y][x].Color(), command=functools.partial(SwitchColor, b.Grid()[y][x].Color()))
+            buttons[y][x] = Button(frameBoard, bd=0, bg=b.Grid()[y][x].Color(), command=functools.partial(SwitchColor, b.Grid()[y][x].Color()))
             buttons[y][x].config(height=1, width=2, state='normal')
             buttons[y][x].grid(column=x, row=y)
 
 
-
+#Update color of tiles/buttons
 def UpdateButtons():
 
     for y in range(0, b.Y()):
@@ -37,7 +36,7 @@ def UpdateButtons():
             
 
 
-
+#Switch the color of the board and update
 def SwitchColor(c):
     b.SetColor(c)
     UpdateButtons()
@@ -45,51 +44,54 @@ def SwitchColor(c):
     window.update()
 
 
-
+#Update game progress (board %, turns, win/lose)
 def UpdateProgress():
     svProgress.set(str(b.FloodPercent()) + "%")
-    svTurns.set("0 / 0")
     
+    #Increment turns if game is not finished
+    if bool(gameFinished.get()) == False:
+        ivTurns.set(int(ivTurns.get()) + 1)
+        svTurns.set(str(ivTurns.get()) + " / " + str(b.WinningScore()))
+    
+    #Check for win
+    if b.FloodPercent() == 100 and bool(gameFinished.get()) == False:
+        gameFinished.set(True)
+        if int(ivTurns.get()) <= b.WinningScore():
+            svWin.set("You Win!")
+            lblWin.config(fg="green")
+        else:
+            svWin.set("You Lose!")
+            lblWin.config(fg="red")
+
+    #Check for lose (display lose before 100% complete)
+    if int(ivTurns.get()) > b.WinningScore(): 
+        svWin.set("You Lose!")
+        lblWin.config(fg="red")
+        
+        
 
 
-
+#New Game (destroy window to be rebuilt)
 def NewGame():
     window.destroy()
     
     
+#Exit Game (destroy window and do not rebuild)
 def ExitGame():
     svExit.set("True")
     window.destroy()
     
     
-    
+#Open the project github link in web browser
 def OpenGitHub():
     webbrowser.open("https://github.com/d-h-saintleo/Flood-The-Board-Game",new=1)
+
     
     
-def GetWindowSizeString(xInput, yInput):
-    if xInput <= 10:
-        x = 400
-    elif xInput > 10 and xInput <=20:
-        x = 625
-    elif yInput > 20 and yInput <=30:
-        x = 850
-    else:
-        x = 850
-        
-    if yInput <= 10:
-        y = 275
-    elif yInput > 10 and yInput <=20:
-        y = 525
-    elif yInput > 20 and yInput <=30:
-        y = 750
-    else:
-        y = 750
-        
-    return str(x) + "x" + str(y)
+def on_close():
+      ExitGame()
     
-    
-    
+
 #Initial Variables
 boardWidthInput = 10
 boardHeightInput= 10
@@ -98,7 +100,7 @@ firstGame = True
 
 
 
-
+#Main Loop
 while True:
 
 
@@ -120,13 +122,26 @@ while True:
     window.title("Flood the Board Game (" + str(boardWidthInput) + "x" + str(boardHeightInput) + "x" + str(boardColorsInput) + ")")
     #Dynamically Create Window Size
     #geometryString = str(str((b.X() * 26) + 150) + "x" + str((b.Y() * 26) + 12))
-    window.geometry(GetWindowSizeString(b.X(), b.Y()))
-
+    #window.geometry(GetWindowSizeString(b.X(), b.Y()))
+    
 
     #Change Window Icon
     window.iconbitmap("icon.ico")
+    
+    
+    
+    #Frames
+    #==========================================================================
+    frameBoard = Frame(window, bd=10, relief="raised")
+    frameBoard.grid(column=0, row=0, rowspan=2)
+    frameOptions = Frame(window)
+    frameOptions.grid(column=1, row=0, sticky="n")
+    frameProgress = Frame(window)
+    frameProgress.grid(column=1, row=1, sticky="s")
 
-
+    
+    
+    
     #Create Buttons
     #==========================================================================
     buttons = []
@@ -138,86 +153,83 @@ while True:
     CreateButtons()
 
     
-    
-    
 
+    
     #Spin Boxes
     #==========================================================================
     #Width
     svWidth = StringVar()
-    spbWidth = Spinbox(window, from_=3, to=30, width=7, textvariable=svWidth)
-    spbWidth.grid(column=b.X()+3, row=1)
+    spbWidth = Spinbox(frameOptions, from_=3, to=30, width=8, justify="center", textvariable=svWidth)
+    spbWidth.grid(column=0, row=1)
     svWidth.set(boardWidthInput)
     #Height
     svHeight = StringVar()
-    spbHieght = Spinbox(window, from_=8, to=30, width=7, textvariable=svHeight)
-    spbHieght.grid(column=b.X()+3, row=2)
+    spbHieght = Spinbox(frameOptions, from_=3, to=30, width=8, justify="center", textvariable=svHeight)
+    spbHieght.grid(column=1, row=1)
     svHeight.set(boardHeightInput)
     #Colors
     svColors = StringVar()
-    spbColors = Spinbox(window, from_=2, to=10, width=7, textvariable=svColors)
-    spbColors.grid(column=b.X()+3, row=3)
+    spbColors = Spinbox(frameOptions, from_=2, to=10, width=8, justify="center", textvariable=svColors)
+    spbColors.grid(column=2, row=1)
     svColors.set(boardColorsInput)
-
+    
 
     
     #Labels
     #==========================================================================
-
-    #Spacer Label
-    lblTurnsTitle = Label(window, text="")
-    lblTurnsTitle.config(height=1, width=2)
-    lblTurnsTitle.grid(column=b.X()+1, row=0)
-    #Options Title
-    lblOptionsTitle = Label(window, text="Game Options:")
-    lblOptionsTitle.config(height=1)
-    lblOptionsTitle.grid(column=b.X()+2, row=0)
+    
     #Width Title
-    lblWidthTitle = Label(window, text="Width:")
-    lblWidthTitle.config(height=1, width=10)
-    lblWidthTitle.grid(column=b.X()+2, row=1)
+    lblWidthTitle = Label(frameOptions, text="Width:")
+    lblWidthTitle.config(height=1)
+    lblWidthTitle.grid(column=0, row=0)
     #Height Title
-    lblHeightTitle = Label(window, text="Height:")
+    lblHeightTitle = Label(frameOptions, text="Height:")
     lblHeightTitle.config(height=1)
-    lblHeightTitle.grid(column=b.X()+2, row=2)
+    lblHeightTitle.grid(column=1, row=0)
+    
     #Colors Title
-    lblColorsTitle = Label(window, text="Colors:")
+    lblColorsTitle = Label(frameOptions, text="Colors:")
     lblColorsTitle.config(height=1)
-    lblColorsTitle.grid(column=b.X()+2, row=3)
+    lblColorsTitle.grid(column=2, row=0)
     #Turns Title
-    lblTurnsTitle = Label(window, text="Turns:")
+    lblTurnsTitle = Label(frameProgress, text="Turns:")
     lblTurnsTitle.config(height=1)
-    lblTurnsTitle.grid(column=b.X()+2, row=b.Y()-2)
+    lblTurnsTitle.grid(column=0, row=1)
     #Progress Title
-    lblTurnsTitle = Label(window, text="Flood:")
+    lblTurnsTitle = Label(frameProgress, text="Flood:")
     lblTurnsTitle.config(height=1)
-    lblTurnsTitle.grid(column=b.X()+2, row=b.Y()-1)
+    lblTurnsTitle.grid(column=0, row=2)
     #Turns Count
+    ivTurns = IntVar()
     svTurns = StringVar()
-    lblTurns = Label(window, textvariable=svTurns)
-    lblTurns.config(height=1)
-    lblTurns.grid(column=b.X()+3, row=b.Y()-2)
-    svTurns.set("0 / 0")
+    lblTurns = Label(frameProgress, textvariable=svTurns)
+    lblTurns.config(width=8)
+    lblTurns.grid(column=1, row=1)
+    ivTurns.set(-1)
     #Process Count
     svProgress = StringVar()
-    lblProgress = Label(window, textvariable=svProgress)
-    lblProgress.config(height=1)
-    lblProgress.grid(column=b.X()+3, row=b.Y()-1)
-
-    
+    lblProgress = Label(frameProgress, textvariable=svProgress)
+    lblProgress.config(width=8)
+    lblProgress.grid(column=1, row=2)
+    #Win Message Label
+    svWin = StringVar()
+    lblWin = Label(frameProgress, textvariable=svWin)
+    lblWin.config(width=8, font="arial 18 bold", fg="black")
+    lblWin.grid(column=1, row=0)
+    svWin.set("")
     
     #Other Buttons
     #==========================================================================
     
     #New Game
-    btnNewGame = Button(window, text="New Game")
-    btnNewGame.config(height=1, width=8, bd=1, command=NewGame)
-    btnNewGame.grid(column=b.X()+3, row=4)
+    btnNewGame = Button(frameOptions, text="New Game")
+    btnNewGame.config(height=1, width=8, bd=2, command=NewGame)
+    btnNewGame.grid(column=2, row=2)
     #Exit Game
     svExit = StringVar()
-    btnExitGame = Button(window, text="Exit Game")
-    btnExitGame.config(height=1, width=8, bd=1, command=ExitGame)
-    btnExitGame.grid(column=b.X()+3, row=5)
+    btnExitGame = Button(frameOptions, text="Exit Game")
+    btnExitGame.config(height=1, width=8, bd=2, command=ExitGame)
+    btnExitGame.grid(column=0, row=2)
     svExit.set("False")
     
     
@@ -231,11 +243,13 @@ while True:
     filemenu.add_command(label="Exit", command=ExitGame)
     menubar.add_cascade(label="File", menu=filemenu)
     helpmenu = Menu(menubar, tearoff=0)
-    helpmenu.add_command(label="About")
-    helpmenu.add_separator()
-    helpmenu.add_command(label="GitHub", command=OpenGitHub)
+    helpmenu.add_command(label="About", command=OpenGitHub)
     menubar.add_cascade(label="Help", menu=helpmenu)
 
+    
+    #Game already won/finished variable
+    gameFinished = BooleanVar()
+    gameFinished.set(False)
     
     #Update Game Progress
     UpdateProgress()
@@ -243,6 +257,9 @@ while True:
     #Add Menu Bar
     window.config(menu=menubar)
 
+    #Add detection for window close
+    window.protocol("WM_DELETE_WINDOW",  on_close)
+    
     #Main GUI Loop
     window.mainloop()
     
@@ -262,7 +279,7 @@ while True:
     try:
         boardHeightInput = int(svHeight.get())
     except:
-        boardHeightInput = 8
+        boardHeightInput = 3
     try:
         boardColorsInput = int(svColors.get())
     except:
@@ -274,8 +291,8 @@ while True:
     elif boardWidthInput > 30:
         boardWidthInput = 30
     
-    if boardHeightInput < 8:
-        boardHeightInput = 8
+    if boardHeightInput < 3:
+        boardHeightInput = 3
     elif boardHeightInput > 30:
         boardHeightInput = 30
         
