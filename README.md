@@ -29,4 +29,5 @@ Python 3.0 or greater (https://www.python.org/downloads/)
 
 * **GUI**: To get started, you first must select the width and heighth of the board as well as the number of colors to be used. Then you must click on any tile in order to switch the color of the flood to that tile's color. The board will update and display your current progress as you switch colors until the board is completely flood, or you exit the game.
 
-
+# Game Demonstration:
+![demo](https://user-images.githubusercontent.com/45020888/49111677-ccb40e80-f25e-11e8-916d-e3939ea281e5.png)
