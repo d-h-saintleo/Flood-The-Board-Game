@@ -179,8 +179,8 @@ class Board:
         #X and Y = Board Size
         #C = Number of colors
         #Formula:
-        #   (sqrt(X * Y) * (C / 3.75)) = Rounded
-        self._WinningScore = round(math.sqrt(self._GridSize["X"] * self._GridSize["Y"]) * (self._ColorSize / 3.75))
+        #   (sqrt(X * Y) * (C / 3.25)) = Rounded
+        self._WinningScore = round(math.sqrt(self._GridSize["X"] * self._GridSize["Y"]) * (self._ColorSize / 3.25))
         
     
     #Override Object String Return - Print Board of Colors
