@@ -17,10 +17,10 @@ from Board import *
 
 #Create the initial tiles/buttons
 def CreateButtons():
+
     for y in range(0, b.Y()):
         for x in range(0, b.X()):
-
-            buttons[y][x] = Button(frameBoard, bd=0, bg=b.Grid()[y][x].Color(), command=functools.partial(SwitchColor, b.Grid()[y][x].Color()))
+            buttons[y][x] = Button(frameBoard, bd=int(ivBorderSize.get()), fg="black", bg=b.Grid()[y][x].Color(), command=functools.partial(SwitchColor, b.Grid()[y][x].Color()))
             buttons[y][x].config(height=1, width=2, state='normal')
             buttons[y][x].grid(column=x, row=y)
 
@@ -28,9 +28,15 @@ def CreateButtons():
 #Update color of tiles/buttons
 def UpdateButtons():
 
+
     for y in range(0, b.Y()):
         for x in range(0, b.X()):
-            buttons[y][x].config(state='normal', bg=b.Grid()[y][x].Color())
+            if b.Grid()[y][x].IsAbsorbed() == True:
+                t = str(svMarker.get())
+            else:
+                t = ""
+            
+            buttons[y][x].config(state='normal', text=t, bg=b.Grid()[y][x].Color())
             buttons[y][x].config(command=functools.partial(SwitchColor, b.Grid()[y][x].Color()))
             buttons[y][x].grid(column=x, row=y)
             
@@ -46,6 +52,7 @@ def SwitchColor(c):
 
 #Update game progress (board %, turns, win/lose)
 def UpdateProgress():
+    
     svProgress.set(str(b.FloodPercent()) + "%")
     
     #Increment turns if game is not finished
@@ -97,7 +104,8 @@ boardWidthInput = 10
 boardHeightInput= 10
 boardColorsInput= 4
 firstGame = True
-
+bordersTF = True
+markersTF = False
 
 
 #Main Loop
@@ -110,7 +118,6 @@ while True:
         boardHeightInput= 10
         boardColorsInput= 4
         firstGame = False
-
     
     b = Board(int(boardWidthInput), int(boardHeightInput), int(boardColorsInput), True)
 
@@ -140,7 +147,32 @@ while True:
     frameProgress.grid(column=1, row=1, sticky="s")
 
     
+    #Checkbuttons
+    #==========================================================================
     
+    #Borders Checkbox
+    ivBorderSize = IntVar()
+    cbBorders = Checkbutton(frameOptions, text="Borders", onvalue=2, offvalue=0, variable=ivBorderSize)
+    cbBorders.config(height=1)
+    cbBorders.grid(column=0, row=2)
+    
+    
+    #Markers Checkbox
+    svMarker = StringVar()
+    cbMarkers = Checkbutton(frameOptions, text="Markers", onvalue="X", offvalue="", variable=svMarker)
+    cbMarkers.config(height=1)
+    cbMarkers.grid(column=1, row=2)
+    
+    if bordersTF == True:
+        cbBorders.select()
+    else:
+        cbBorders.deselect()
+    if markersTF == True:
+        cbMarkers.select()
+    else:
+        cbMarkers.deselect()
+
+            
     
     #Create Buttons
     #==========================================================================
@@ -218,6 +250,12 @@ while True:
     lblWin.grid(column=1, row=0)
     svWin.set("")
     
+    
+    
+
+    
+    
+    
     #Other Buttons
     #==========================================================================
     
@@ -227,9 +265,9 @@ while True:
     btnNewGame.grid(column=2, row=2)
     #Exit Game
     svExit = StringVar()
-    btnExitGame = Button(frameOptions, text="Exit Game")
-    btnExitGame.config(height=1, width=8, bd=2, command=ExitGame)
-    btnExitGame.grid(column=0, row=2)
+    #btnExitGame = Button(frameOptions, text="Exit Game")
+    #btnExitGame.config(height=1, width=8, bd=2, command=ExitGame)
+    #btnExitGame.grid(column=0, row=4)
     svExit.set("False")
     
     
@@ -250,13 +288,19 @@ while True:
     #Game already won/finished variable
     gameFinished = BooleanVar()
     gameFinished.set(False)
+        
     
     #Update Game Progress
     UpdateProgress()
+    
+    #Update the buttons for initial absorb
+    UpdateButtons()
 
     #Add Menu Bar
     window.config(menu=menubar)
 
+    
+    
     #Add detection for window close
     window.protocol("WM_DELETE_WINDOW",  on_close)
     
@@ -301,12 +345,22 @@ while True:
     elif boardColorsInput > 10:
         boardColorsInput = 10
 
+    
+    #Get Borders and Markers status
+    if int(ivBorderSize.get()) == 0:
+        bordersTF = False
+    else:
+        bordersTF = True
+    if str(svMarker.get()) == "":
+        markersTF = False
+    else:
+        markersTF = True
+
 
     #Exit Window if exit button pressed
     #Known issue that red X window exit does not break the loop
     if str(svExit.get()) == "True":
         break
-    
     
     
     
