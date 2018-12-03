@@ -9,8 +9,7 @@ https://github.com/d-h-saintleo/Flood-The-Board-Game
   - [x] Version 2.0 - First GUI Release (**see "Known Issues"**)
   - [x] Version 2.1 - v2.0 Errors fixed
   - [x] Version 2.2 - Update to the GUI/Options
-  - [ ] Version 2.3 - Final Fixes
-- [ ] Version 3 - Final Version
+- [X] Version 3 - Final Version
 
 # Requirements:
 - Python 3.0 or greater (https://www.python.org/downloads/)
